@@ -1,0 +1,622 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 ArialMT;\f1\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs29\fsmilli14667 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 <!DOCTYPE html>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <html lang="en">
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <head>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <meta charset="UTF-8" />
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <title>Tony Gym Schedule</title>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <style>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 *\{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;-webkit-tap-highlight-color:transparent\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 body\{background:#000;color:#fff;min-height:100vh;padding-bottom:100px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 :root\{--yellow:#ffd000;--orange:#ff7a00;--black:#000;--white:#fff;--card:#121212\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 header\{position:sticky;top:0;z-index:999;background:rgba(0,0,0,.95);backdrop-filter:blur(12px);padding:18px 16px;border-bottom:1px solid rgba(255,122,0,.2)\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .title\{font-size:28px;font-weight:800;background:linear-gradient(90deg,var(--yellow),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .sub\{margin-top:6px;color:#aaa;font-size:13px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .months\{display:flex;gap:8px;overflow:auto;padding:14px 0 2px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .months button\{border:none;background:#1a1a1a;color:#bbb;padding:10px 16px;border-radius:14px;white-space:nowrap;font-weight:600;transition:.3s\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .months button.active\{background:linear-gradient(135deg,var(--orange),var(--yellow));color:#000;transform:scale(1.03)\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .dashboard\{padding:16px;display:grid;gap:16px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .stats\{display:grid;grid-template-columns:repeat(3,1fr);gap:12px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .stat\{background:linear-gradient(145deg,#101010,#181818);padding:16px;border-radius:22px;box-shadow:0 10px 30px rgba(0,0,0,.5);border:1px solid rgba(255,122,0,.15)\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .stat h3\{font-size:13px;color:#aaa;margin-bottom:8px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .stat p\{font-size:24px;font-weight:800;color:var(--yellow)\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .progressWrap\{background:#111;border-radius:20px;padding:16px;border:1px solid rgba(255,122,0,.18)\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .progressTop\{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .progressBar\{height:14px;background:#222;border-radius:999px;overflow:hidden\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .progressBar div\{height:100%;background:linear-gradient(90deg,var(--orange),var(--yellow));width:0%;transition:.4s\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .calendar\{display:grid;grid-template-columns:repeat(2,1fr);gap:12px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .dayCard\{background:linear-gradient(160deg,#111,#191919);border-radius:24px;padding:14px;position:relative;overflow:hidden;border:1px solid rgba(255,122,0,.18);transition:.3s;box-shadow:0 8px 20px rgba(0,0,0,.35)\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .dayCard:hover\{transform:translateY(-3px)\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .dayHead\{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .dayName\{font-size:15px;font-weight:700\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .dayNum\{font-size:28px;font-weight:900;color:var(--yellow)\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .type\{font-size:12px;color:#ffb454;margin-bottom:12px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .toggleBtn\{width:100%;padding:12px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--orange),var(--yellow));color:#000;font-weight:800;margin-top:8px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .workout\{display:none;padding-top:14px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .workout.open\{display:block\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .exercise\{background:#0b0b0b;border-radius:18px;padding:14px;margin-bottom:14px;border:1px solid rgba(255,208,0,.1)\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .exercise h4\{font-size:16px;color:var(--yellow);margin-bottom:10px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .setRow\{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 input,textarea,select\{width:100%;background:#181818;border:1px solid #2a2a2a;color:#fff;padding:12px;border-radius:12px;outline:none;font-size:13px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 textarea\{resize:none;min-height:70px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 label\{font-size:11px;color:#aaa;display:block;margin-bottom:4px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .hist\{margin-top:10px;background:#141414;border-radius:12px;padding:10px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .histTitle\{font-size:12px;color:var(--orange);margin-bottom:8px;font-weight:700\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .histItem\{font-size:11px;color:#bbb;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05)\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .histItem:last-child\{border:none\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .bottomNav\{position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,.97);border-top:1px solid rgba(255,122,0,.2);display:flex;justify-content:space-around;padding:14px 10px;z-index:999\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .bottomNav button\{background:none;border:none;color:#fff;font-weight:700;font-size:13px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .modeBox\{display:flex;gap:10px;margin-top:12px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .modeBox button\{flex:1;padding:12px;border:none;border-radius:14px;background:#1a1a1a;color:#fff;font-weight:700\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .modeBox button.active\{background:linear-gradient(135deg,var(--orange),var(--yellow));color:#000\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 canvas\{background:#111;border-radius:20px;padding:10px;width:100%;margin-top:16px\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .completeCheck\{width:22px;height:22px;accent-color:#ff9500\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 .restDay\{padding:22px 10px;text-align:center;color:#999;font-weight:700\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 @media(max-width:600px)\{.calendar\{grid-template-columns:1fr\}.stats\{grid-template-columns:1fr 1fr 1fr\}.title\{font-size:24px\}\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </style>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </head>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <body>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <header>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class="title">Tony Gym Schedule</div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class="sub">Premium Workout Tracker</div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class="months" id="months"></div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class="modeBox">
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <button onclick="setMode('read')" id="readBtn">Read</button>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <button onclick="setMode('write')" id="writeBtn" class="active">Write</button>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <button onclick="setMode('admin')" id="adminBtn">Admin</button>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </header>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class="dashboard">
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class="stats">
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class="stat"><h3>Completed</h3><p id="completed">0</p></div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class="stat"><h3>Streak</h3><p id="streak">0</p></div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class="stat"><h3>Progress</h3><p id="percent">0%</p></div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class="progressWrap">
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class="progressTop"><span>Monthly Completion</span><span id="progressText">0%</span></div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class="progressBar"><div id="bar"></div></div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class="calendar" id="calendar"></div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <canvas id="graph" height="160"></canvas>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class="bottomNav">
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <button onclick="window.scrollTo(\{top:0,behavior:'smooth'\})">Dashboard</button>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <button onclick="document.getElementById('graph').scrollIntoView(\{behavior:'smooth'\})">Progress</button>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <button onclick="localStorage.clear();location.reload()">Reset</button>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <script>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const currentMonth=new Date().getMonth();
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const monthsEl=document.getElementById('months');
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 months.forEach((m,i)=>\{const b=document.createElement('button');b.innerText=m;if(i===currentMonth)b.classList.add('active');monthsEl.appendChild(b)\});
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 let mode=localStorage.getItem('mode')||'write';
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const schedule=\{
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 Monday:\{type:'Legs',exercises:[
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Squats',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Lunges',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Step Up',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Leg Extension',sets:5\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 ]\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 Tuesday:\{type:'Back + Biceps',exercises:[
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Bent Over Row',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Lat Pulldown',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Seated Row',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Face Pull',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Shrugs',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Reverse Curl',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Hammer Curl',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Preacher Curl',sets:5\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 ]\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 Wednesday:\{type:'Rest'\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 Thursday:\{type:'Chest + Shoulder + Triceps',exercises:[
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Decline Bench Press',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Incline Press',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Pec Fly',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Dumbbell Overhead Press',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Tricep Pushdown',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Dumbbell Overhead Extension',sets:5\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 ]\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 Friday:\{type:'Legs',exercises:[
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Leg Press',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Leg Curl',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Seated Calf Raise',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Standing Calf Raise',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Dumbbell Laterial Raise',sets:5\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 ]\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 Saturday:\{type:'Stretching + Cardio',exercises:[
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Cardio',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Plank',sets:5\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \{name:'Leg Raises',sets:5\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 ]\},
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 Sunday:\{type:'Rest'\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \};
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 function setMode(m)\{mode=m;localStorage.setItem('mode',m);['read','write','admin'].forEach(x=>document.getElementById(x+'Btn').classList.remove('active'));document.getElementById(m+'Btn').classList.add('active');applyMode()\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 function applyMode()\{document.querySelectorAll('input,textarea').forEach(i=>\{i.disabled=mode==='read'\})\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const cal=document.getElementById('calendar');
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const totalDays=30;
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 for(let i=1;i<=totalDays;i++)\{
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const dayNames=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const dn=dayNames[(i+0)%7];
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const day=schedule[dn];
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const card=document.createElement('div');
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 card.className='dayCard';
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 let content='';
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 if(day.type==='Rest')\{
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 content=`<div class='restDay'>Recovery Day</div>`
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \}else\{
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 content=day.exercises.map((ex,ei)=>\{
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 let sets='';
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 for(let s=1;s<=5;s++)\{
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const key=`d$\{i\}_$\{ei\}_$\{s\}`;
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const val=JSON.parse(localStorage.getItem(key)||'\{\}');
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 sets+=`<div class='setRow'>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div><label>Weight</label><input data-key='$\{key\}' data-field='weight' value='$\{val.weight||''\}'></div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div><label>Reps</label><input data-key='$\{key\}' data-field='reps' value='$\{val.reps||''\}'></div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div><label>Sets</label><input data-key='$\{key\}' data-field='sets' value='$\{val.sets||''\}'></div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </div>`
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const noteKey=`note_$\{i\}_$\{ei\}`;
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const note=localStorage.getItem(noteKey)||'';
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const hist=JSON.parse(localStorage.getItem('hist_'+noteKey)||'[]');
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 return `<div class='exercise'>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <h4>$\{ex.name\}</h4>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 $\{sets\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <label>Notes</label>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <textarea data-note='$\{noteKey\}'>$\{note\}</textarea>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class='hist'>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class='histTitle'>Last 5 Entries</div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 $\{hist.map(h=>`<div class='histItem'>$\{h\}</div>`).join('')\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </div>`\}).join('')
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 card.innerHTML=`
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class='dayHead'>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class='dayName'>$\{dn\}</div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class='type'>$\{day.type\}</div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class='dayNum'>$\{i\}</div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div style='display:flex;justify-content:space-between;align-items:center'>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <span>Completed</span>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <input type='checkbox' class='completeCheck' data-day='$\{i\}' $\{localStorage.getItem('done_'+i)==='true'?'checked':''\}>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </div>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <button class='toggleBtn'>Open Workout</button>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 <div class='workout'>$\{content\}</div>`;
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 cal.appendChild(card);
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 \}
+\f1\fs24 \
+\
+
+\f0\fs29\fsmilli14667 document.querySelectorAll('.toggleBtn').forEach(btn=>\{btn.onclick=()=>\{btn.nextElementSibling.classList.toggle('open')\}\});
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 function saveHistory(noteKey,val)\{let arr=JSON.parse(localStorage.getItem('hist_'+noteKey)||'[]');if(val.trim()!=='')\{arr.unshift(val);arr=[...new Set(arr)].slice(0,5);localStorage.setItem('hist_'+noteKey,JSON.stringify(arr))\}\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 document.querySelectorAll('input[data-key]').forEach(inp=>\{inp.addEventListener('input',e=>\{const k=e.target.dataset.key;const field=e.target.dataset.field;const obj=JSON.parse(localStorage.getItem(k)||'\{\}');obj[field]=e.target.value;localStorage.setItem(k,JSON.stringify(obj));drawGraph()\})\});
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 document.querySelectorAll('textarea').forEach(t=>\{t.addEventListener('input',e=>\{localStorage.setItem(e.target.dataset.note,e.target.value);saveHistory(e.target.dataset.note,e.target.value);setTimeout(()=>location.reload(),300)\})\});
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 document.querySelectorAll('.completeCheck').forEach(c=>\{c.onchange=e=>\{localStorage.setItem('done_'+e.target.dataset.day,e.target.checked);updateStats()\}\});
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 function updateStats()\{let done=0;for(let i=1;i<=30;i++)\{if(localStorage.getItem('done_'+i)==='true')done++\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 document.getElementById('completed').innerText=done;
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 const percent=Math.round((done/30)*100);
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 document.getElementById('percent').innerText=percent+'%';
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 document.getElementById('progressText').innerText=percent+'%';
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 document.getElementById('bar').style.width=percent+'%';
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 let streak=0;for(let i=30;i>=1;i--)\{if(localStorage.getItem('done_'+i)==='true')streak++;else break\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 document.getElementById('streak').innerText=streak\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 function drawGraph()\{const c=document.getElementById('graph');const ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);ctx.beginPath();ctx.strokeStyle='#ffb300';ctx.lineWidth=3;let points=[];document.querySelectorAll('input[data-field="weight"]').forEach((i,idx)=>\{const v=parseFloat(i.value)||0;if(v>0)points.push(v)\});if(points.length<2)return;const max=Math.max(...points);points.forEach((p,i)=>\{const x=(i/(points.length-1))*c.width;const y=c.height-((p/max)*(c.height-20));if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)\});ctx.stroke()\}
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 updateStats();drawGraph();applyMode();
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </script>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </body>
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667 </html>
+\f1\fs24 \
+}
